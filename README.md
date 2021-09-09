@@ -11,3 +11,16 @@ SMALA  outperforms current methods for joint construction of multilingual subwor
 
 ## Prerequisites
 ### Dependencies
+* Python 3.7.9
+* [Pytorch](https://pytorch.org/) (tested on 1.6.0)
+* [FastText](https://github.com/facebookresearch/fastText)
+* [FastAlign](https://github.com/clab/fast_align)
+* [Transformers](https://huggingface.co/transformers/) (tested on 1.4.0)
+* [Tokenizers](https://github.com/huggingface/tokenizers) (tested on 0.9.4)
+
+
+## Acknowledgements
+
+We would like to thank the community for releasing their code! This repository contains code from [HuggingFace](https://github.com/huggingface/transformers) and from the [RAMEN](https://github.com/alexa/ramen) repository.
+
+---
