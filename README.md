@@ -19,6 +19,30 @@ SMALA  outperforms current methods for joint construction of multilingual subwor
 * [Tokenizers](https://github.com/huggingface/tokenizers) (tested on 0.9.4)
 
 
+### Install Requirements
+*Create Environment (Optional):* Ideally, you should create an environment for the project.
+
+    conda create -n smala_env python=3.7.9
+    conda activate smala_env
+Install PyTorch `1.1.0` with the desired Cuda version if you want to use the GPU:
+
+`conda install pytorch==1.6.0 torchvision==0.7.0 -c pytorch`
+
+Clone the project:
+
+```
+git clone https://github.com/GeorgeVern/smala.git
+cd smala
+```
+
+Then install the rest of the requirements:
+
+`pip install -r requirements.txt`
+
+### Download Data
+
+
+
 ## Acknowledgements
 
 We would like to thank the community for releasing their code! This repository contains code from [HuggingFace](https://github.com/huggingface/transformers) and from the [RAMEN](https://github.com/alexa/ramen) repository.
