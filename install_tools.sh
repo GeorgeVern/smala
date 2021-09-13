@@ -44,7 +44,7 @@ if [ ! -d $TOOLS_PATH/fastText ]; then
     #mkdir build && cd build && cmake ..
     #make && make install
     wget https://github.com/facebookresearch/fastText/archive/v0.9.2.zip
-    unzip v0.9.2.zip
+    unzip v0.9.2.zip && rm v0.9.2.zip
     cd fastText-0.9.2
     make
 fi
