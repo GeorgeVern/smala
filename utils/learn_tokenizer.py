@@ -55,8 +55,8 @@ if __name__ == "__main__":
     parser.add_argument('--tokenizer_dir',
                         help='where to store the learned tokenizer')
     parser.add_argument('--lowercase', default=True, help='whether to lowercase data')
-    parser.add_argument('--files', nargs='+', default=['/data/mono/wiki/txt/en/en.train.txt',
-                                                       '/data/mono/wiki/txt/en/en.valid.txt'],
+    parser.add_argument('--files', nargs='+', default=['/data/mono/txt/en/en.train.txt',
+                                                       '/data/mono/txt/en/en.valid.txt'],
                         help='where the input files are located')
     args = parser.parse_args()
     main(args)
