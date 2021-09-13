@@ -13,7 +13,7 @@ def main(args):
             vocab_file=args.tokenizer, do_lower_case=True,
             strip_accents=False)
 
-    print("Using tokenizer :{}".format(args.tokenizer))
+    print("Using tokenizer: {}".format(args.tokenizer))
 
     with open(args.file) as f:
         text = f.readlines()
