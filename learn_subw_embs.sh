@@ -6,7 +6,7 @@ lg=$1
 N_THREADS=48     # number of threads in data preprocessing
 N_EPOCHS=10      # number of fastText epochs
 
-$TOOLS_PATH=$PWD/tools
+TOOLS_PATH=$PWD/tools
 
 # files full paths
 TGT_WP=$PWD/data/mono/text/$lg/WP/$lg.train.wp
