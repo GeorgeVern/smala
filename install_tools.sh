@@ -15,7 +15,6 @@ TOOLS_PATH=$PWD/tools
 MOSES_DIR=$TOOLS_PATH/mosesdecoder
 FASTBPE_DIR=$TOOLS_PATH/fastBPE
 FASTBPE=$FASTBPE_DIR/fast
-WMT16_SCRIPTS=$TOOLS_PATH/wmt16-scripts
 
 # tools path
 mkdir -p $TOOLS_PATH
@@ -40,16 +39,20 @@ fi
 
 # Download FastText 
 if [ ! -d $TOOLS_PATH/fastText ]; then
-    git clone https://github.com/facebookresearch/fastText.git
-    cd fastText
-    mkdir build && cd build && cmake ..
-    make && make install
+    #git clone https://github.com/facebookresearch/fastText.git
+    #cd fastText
+    #mkdir build && cd build && cmake ..
+    #make && make install
+    wget https://github.com/facebookresearch/fastText/archive/v0.9.2.zip
+    unzip v0.9.2.zip
+    cd fastText-0.9.2
+    make
 fi
 
 # Download FastAlign 
-if [ ! -d $TOOLS_PATH/fastText ]; then
+if [ ! -d $TOOLS_PATH/fast_align ]; then
     git clone https://github.com/clab/fast_align.git
-    cd fastText
+    cd fast_align
     mkdir build
     cd build
     cmake ..
