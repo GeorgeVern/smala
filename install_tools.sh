@@ -47,6 +47,7 @@ if [ ! -d $TOOLS_PATH/fastText ]; then
     unzip v0.9.2.zip && rm v0.9.2.zip
     cd fastText-0.9.2
     make
+    cd ..
 fi
 
 # Download FastAlign 
