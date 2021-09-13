@@ -1,4 +1,5 @@
 import argparse
+import os
 from transformers import BertTokenizerFast, AutoTokenizer
 
 
@@ -17,9 +18,14 @@ def main(args):
     with open(args.file) as f:
         text = f.readlines()
 
+    # create an additional directory ../lang/WP/
+    output_dir = "/".join(args.file.split("/")[:-1])+"/WP"
+    os.makedirs(output_dir, exist_ok=True)
+    
     output_file = ".".join(args.file.split(".")[:-1] + ["wp"])
 
     with open(output_file, "w+") as output:
+        # with open('{}/sampled/all.{}.tok.wp'.format(data_path, language), "w+") as output:
         for line in text:
             output.write('{}\n'.format(" ".join(tokenizer.tokenize(line))))
 
@@ -29,6 +35,6 @@ if __name__ == "__main__":
     parser.add_argument('--tokenizer',
                         help='where the pretrained tokenizer is stored')
     parser.add_argument('--file', nargs='+', default='/data/mono/wiki/txt/en/en.train.txt',
-                        help='where the input files are located')
+                        help='where the file-to-be-tokenized is located')
     args = parser.parse_args()
     main(args)
