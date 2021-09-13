@@ -8,7 +8,7 @@ N_EPOCHS=10      # number of fastText epochs
 
 TOOLS_PATH=$PWD/tools
 
-# files full paths
+# tokenized data path
 TGT_WP=$PWD/data/mono/text/$lg/WP/$lg.train.wp
 
 # fastText
