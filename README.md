@@ -40,11 +40,11 @@ Then install the rest of the requirements:
     pip install -r requirements.txt
 
 ### Download Data
-Install tools necessary for data extraction, preprocessing and alignment:
+Install tools (*) necessary for data extraction, preprocessing and alignment:
     
     bash install tools.sh
 
-
+(*) You will have to change line 66 from the wikiextractor/WikiExtractor.py script: from .extract --> from extract
 
 
 ## Acknowledgements
