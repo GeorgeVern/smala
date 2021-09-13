@@ -1,5 +1,3 @@
-#!/usr/bin/perl -w
-
 # Copyright (c) 2019-present, Facebook, Inc.
 # All rights reserved.
 #
@@ -15,6 +13,8 @@
 set -e
 
 lg=$1  # input language
+
+N_THREADS=8
 
 # data path
 MAIN_PATH=$PWD
@@ -54,11 +54,11 @@ if [ ! -f $WIKI_PATH/txt/$lg/$lg.all ]; then
   | sed "/^\s*\$/d" \
   | grep -v "^<doc id=" \
   | grep -v "</doc>\$" \
-  | $REPLACE_UNICODE_PUNCT | $NORM_PUNC -l $lg | $REM_NON_PRINT_CHAR | $TOKENIZER -no-escape -threads $N_THREADS -l $lg \
+  | perl $REPLACE_UNICODE_PUNCT | perl $NORM_PUNC -l $lg | perl $REM_NON_PRINT_CHAR | perl $TOKENIZER -no-escape -threads $N_THREADS -l $lg \
   | python3 $UNICODE \
-  > $WIKI_PATH/txt/$cs/$lg/$lg.all.txt
+  > $WIKI_PATH/txt//$lg/$lg.all.txt
 fi
-echo "*** Tokenized  $lg Wikipedia dump to $WIKI_PATH/txt/$cs/$lg/$lg.all.txt ***"
+echo "*** Tokenized  $lg Wikipedia dump to $WIKI_PATH/txt//$lg/$lg.all.txt ***"
 
 # split into train / valid / test
 echo "*** Split into train / valid / test ***"
@@ -74,4 +74,4 @@ split_data() {
     shuf --random-source=<(get_seeded_random 42) $1 | head -$NVAL | tail -5000  > $3;
     shuf --random-source=<(get_seeded_random 42) $1 | tail -5000                > $4;
 }
-split_data $WIKI_PATH/txt/$cs/$lg/$lg.all.txt $WIKI_PATH/txt/$cs/$lg/$lg.train.txt $WIKI_PATH/txt/$cs/$lg/$lg.valid.txt $WIKI_PATH/txt/$cs/$lg/$lg.test.txt
+split_data $WIKI_PATH/txt/$lg/$lg.all.txt $WIKI_PATH/txt/$lg/$lg.train.txt $WIKI_PATH/txt//$lg/$lg.valid.txt $WIKI_PATH/txt//$lg/$lg.test.txt
