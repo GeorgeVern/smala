@@ -38,6 +38,8 @@ def save_vocab_dict(vocab_file, vocab_dict):
 def main(args):
     tokenizer = BertWordPieceTokenizer(clean_text=True, handle_chinese_chars=True, lowercase=args.lowercase,
                                        strip_accents=False)
+    
+    print(args.files)
 
     tokenizer.train(args.files, vocab_size=30522, min_frequency=2, show_progress=True)
 
