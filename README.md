@@ -15,6 +15,7 @@ We first learn **subwords** separately for each language and then train the corr
 * [Pytorch](https://pytorch.org/) (tested on 1.6.0)
 * [FastText](https://github.com/facebookresearch/fastText)
 * [FastAlign](https://github.com/clab/fast_align)
+* [VecMap](https://github.com/artetxem/vecmap)
 * [Transformers](https://huggingface.co/transformers/) (tested on 4.1.0)
 * [Tokenizers](https://github.com/huggingface/tokenizers) (tested on 0.9.4)
 
@@ -39,13 +40,31 @@ Then install the rest of the requirements:
 
     pip install -r requirements.txt
 
-### Download Data
+### Install tools
 Install tools (*) necessary for data extraction, preprocessing and alignment:
     
     bash install tools.sh
 
 (*) You will have to change line 66 from the wikiextractor/WikiExtractor.py script: `from .extract` -> `from extract` otherwise you will get a relative import error.
 
+## SMALA
+### Download data
+Download and preprocess wikipedia data for **English** (en) and another language, e.g. **Greek** (el):
+    
+    bash get-mono-data.sh en
+    bash get-mono-data.sh el
+    
+### 1) Subword Mapping
+Learn language-speific tokenizer and get subword embeddings for each language:
+    
+    bash learn_subw_embs.sh en
+    bash learn_subw_embs.sh el
+
+Map the monolingual subword embedding into a common space using the **unsupervised** version (currently default) of  VecMap. Clone its github repo ([VecMap](https://github.com/artetxem/vecmap)) and then run:
+
+```
+python3 vecmap/map_embeddings.py --src_input ./data/mono/txt/en/WP/en.train.wp.vec --trg_input ./data/mono/txt/el/WP/el.train.wp.vec --src_output ./data/mono/txt/en/WP/mapped_en_el_embs.txt --trg_input ./data/mono/txt/el/WP/mapped_el_embs.txt
+```
 
 ## Acknowledgements
 
