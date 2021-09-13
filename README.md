@@ -63,7 +63,7 @@ Learn language-speific tokenizer and get subword embeddings for each language:
 Map the monolingual subword embedding into a common space using the **unsupervised** version (currently default) of  VecMap. Clone its github repo ([VecMap](https://github.com/artetxem/vecmap)) and then run:
 
 ```
-python3 vecmap/map_embeddings.py --src_input ./data/mono/txt/en/WP/en.train.wp.vec --trg_input ./data/mono/txt/el/WP/el.train.wp.vec --src_output ./data/mono/txt/en/WP/mapped_en_el_embs.txt --trg_input ./data/mono/txt/el/WP/mapped_el_embs.txt
+python3 vecmap/map_embeddings.py --src_input data/mono/txt/en/WP/en.train.wp.vec --trg_input data/mono/txt/el/WP/el.train.wp.vec --src_output data/mono/txt/en/WP/mapped_en_el_embs.txt --trg_input data/mono/txt/el/WP/mapped_el_embs.txt
 ```
 
 ## Acknowledgements
