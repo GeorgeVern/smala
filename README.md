@@ -15,7 +15,7 @@ We first learn **subwords** separately for each language and then train the corr
 * [Pytorch](https://pytorch.org/) (tested on 1.6.0)
 * [FastText](https://github.com/facebookresearch/fastText)
 * [FastAlign](https://github.com/clab/fast_align)
-* [Transformers](https://huggingface.co/transformers/) (tested on 1.4.0)
+* [Transformers](https://huggingface.co/transformers/) (tested on 4.1.0)
 * [Tokenizers](https://github.com/huggingface/tokenizers) (tested on 0.9.4)
 
 
