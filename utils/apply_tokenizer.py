@@ -34,7 +34,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser('generate target embeddings from alignments')
     parser.add_argument('--tokenizer',
                         help='where the pretrained tokenizer is stored')
-    parser.add_argument('--file', nargs='+', default='/data/mono/wiki/txt/en/en.train.txt',
+    parser.add_argument('--file', default='/data/mono/wiki/txt/en/en.train.txt',
                         help='where the file-to-be-tokenized is located')
     args = parser.parse_args()
     main(args)
