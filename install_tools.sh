@@ -29,6 +29,8 @@ cd $TOOLS_PATH
 if [ ! -d "$MOSES_DIR" ]; then
   echo "Cloning Moses from GitHub repository..."
   git clone https://github.com/moses-smt/mosesdecoder.git
+  # use this to avoid permission denied when executing a mosesdecoder script
+  chmod -R 757 $MOSES_DIR
 fi
 
 # Download WikiExtractor
