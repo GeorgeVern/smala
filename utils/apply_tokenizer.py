@@ -19,10 +19,11 @@ def main(args):
         text = f.readlines()
 
     # create an additional directory ../lang/WP/
+    filename = args.file.split("/")[-1]
     output_dir = "/".join(args.file.split("/")[:-1])+"/WP"
     os.makedirs(output_dir, exist_ok=True)
     
-    output_file = ".".join(args.file.split(".")[:-1] + ["wp"])
+    output_file = os.path.join(output_dir, ".".join(filename.split(".")[:-1] + ["wp"]))
 
     with open(output_file, "w+") as output:
         # with open('{}/sampled/all.{}.tok.wp'.format(data_path, language), "w+") as output:
