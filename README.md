@@ -44,7 +44,7 @@ Install tools (*) necessary for data extraction, preprocessing and alignment:
     
     bash install tools.sh
 
-(*) You will have to change line 66 from the wikiextractor/WikiExtractor.py script: from .extract --> from extract
+(*) You will have to change line 66 from the wikiextractor/WikiExtractor.py script: `from .extract` -> `from extract` otherwise you will get a relative import error.
 
 
 ## Acknowledgements
