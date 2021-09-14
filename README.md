@@ -63,14 +63,23 @@ Learn language-speific tokenizer and get subword embeddings for each language:
 Map the monolingual subword embeddings into a common space using the **unsupervised** version of  VecMap, since we don't want to rely on seed dictionaries or identical (sub)words. Clone the github repo of ([VecMap](https://github.com/artetxem/vecmap)) and then run:
 
 ```
-python3 vecmap/map_embeddings.py --unsupervised --src_input data/mono/txt/en/WP/en.train.wp.vec --trg_input data/mono/txt/el/WP/el.train.wp.vec --src_output data/mono/txt/en/WP/mapped_en_el_embs.txt --trg_input data/mono/txt/el/WP/mapped_el_embs.txt
+python3 vecmap/map_embeddings.py --unsupervised --src_input smala/data/mono/txt/en/WP/en.train.wp.vec --trg_input smala/data/mono/txt/el/WP/el.train.wp.vec --src_output smala/data/mono/txt/en/WP/mapped_en_el_embs.txt --trg_input smala/data/mono/txt/el/WP/mapped_el_embs.txt
 ```
 ### 2) Anchoring of similar subwords
 Extract subword alignments from the mapped subword embeddings:
 
-    python3 --src_emb data/mono/txt/en/WP/mapped_en_el_embs.txt --tgt_emb  data/mono/txt/el/WP/mapped_el_embs.txt --similarity cosine --alignment_dir en-el --initialize
+    python3 extract_alignments.py --src_emb data/mono/txt/en/WP/mapped_en_el_embs.txt --tgt_emb  data/mono/txt/el/WP/mapped_el_embs.txt --similarity cosine --alignment_dir en-el --initialize
     
+Create new vocabulary for the target language (so that aligned subwords point to the same embedding in both langauges) based on the alignments:
 
+    python3 utils/create_new_vocabs.py --tgt_vocab el-tokenizer/vocab.txt --model_type ours --alignment_dir alignments/en-el
+    
+Initialize the embedding layer of the target model:
+
+    python3 utils/init_weight.py --tgt_vocab alignments/en-el/new_tgt_vocab.txt --prob alignments/en-el/probs_vector.pth --tgt_model emb_layer/el/bert-ours_align_embs
+
+
+## Language Model Transfer with SMALA
 
 
 ## Acknowledgements
