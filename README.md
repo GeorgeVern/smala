@@ -58,7 +58,7 @@ Download and preprocess wikipedia data and learn language-specific for **English
 Learn subword embeddings for each language:
     
     bash learn_subw_embs.sh en
-    bash learn_subw_embs.sh el
+    bash learn_subw_embs.sh el el-tokenizer
 
 Map the monolingual subword embeddings into a common space using the **unsupervised** version of  VecMap, since we don't want to rely on seed dictionaries or identical (sub)words. Clone the github repo of ([VecMap](https://github.com/artetxem/vecmap)) and then run:
 
