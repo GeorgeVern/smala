@@ -6,7 +6,7 @@ from transformers import BertTokenizerFast, AutoTokenizer
 def main(args):
     if args.tokenizer == "bert":
         tokenizer = AutoTokenizer.from_pretrained(
-            'bert-base-uncased', cache_dir='', use_fast=True,
+            'bert-base-uncased', cache_dir='cache', use_fast=True,
             do_lower_case=True)
     else:
         tokenizer = BertTokenizerFast(
