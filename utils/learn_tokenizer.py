@@ -38,7 +38,7 @@ def save_vocab_dict(vocab_file, vocab_dict):
 def main(args):
     tokenizer_dir = os.path.join("tknzr", args.tokenizer_name)
     if os.path.isdir(tokenizer_dir):
-        raise ValueError("Directory already exists.")
+        raise ValueError("Tokenizer directory already exists.")
     else:
         os.makedirs(tokenizer_dir)
         
