@@ -19,7 +19,7 @@ FASTTEXT=$FASTTEXT_DIR/fasttext
 # Learn tokenizer from the data and use it to segment data
 #
 if [[ $lg = "en" ]]; then
-  python3 utils/apply_tokenizer.py --tokenizer "bert" --file "data/mono/txt/{$lg}/{$lg}.train.txt"
+  python3 utils/apply_tokenizer.py --tokenizer "bert" --file "data/mono/txt/$lg/$lg.train.txt"
 else
   python3 utils/learn_tokenizer.py --tokenizer_dir "$lg-tokenizer/" --files "data/mono/txt/$lg/$lg.train.txt" "data/mono/txt/$lg/$lg.train.txt"
   python3 utils/apply_tokenizer.py --tokenizer "$lg-tokenizer/vocab.txt" --file "data/mono/txt/$lg/$lg.train.txt"
