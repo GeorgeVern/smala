@@ -81,6 +81,7 @@ Initialize the embedding layer of the target model:
 Compare with other models
 The above steps serve to use SMALA with additional initialization of the non-aligned subwords (`ours+align` in the paper). To compare with the other models that are included in the paper you must:
 * `ours`: as above but run the `extract_alignments.py` script without the flag ~~`--initialize~`~~ and the `init_weight.py` script with the `--prob None` flag. 
+* `joint`: skip the subword mapping and the first step of anchoring, run the `extract_alignments.py` script with the `--similarity surface_form` and without the  ~~`--initialize~`~~ flag, run the `create_new_vocabs.py` script with the `--model_type joint` flag and the `init_weight.py` script with the `--prob None` flag.
 
 
 ## Language Model Transfer with SMALA
