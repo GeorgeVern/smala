@@ -72,7 +72,7 @@ Extract subword alignments from the mapped subword embeddings:
     
 Create new vocabulary for the target language (so that aligned subwords point to the same embedding in both langauges) based on the alignments:
 
-    python3 utils/create_new_vocabs.py --tgt_vocab el-tokenizer/vocab.txt --model_type ours --alignment_dir alignments/en-el
+    python3 utils/create_new_vocabs.py --tgt_tokenizer el-tokenizer --model_type ours --alignment_dir alignments/en-el
     
 Initialize the embedding layer of the target model:
 
@@ -82,6 +82,7 @@ Initialize the embedding layer of the target model:
 The above steps serve to employ SMALA with additional initialization of the non-aligned subwords (`ours+align` in the paper). To compare with the other models that are included in the paper you need to modify these steps:
 * `ours`: as above but run the `extract_alignments.py` script without the flag ~~`--initialize~`~~ and the `init_weight.py` script with the `--prob None` flag. 
 * `joint`: skip the subword mapping and the first step of anchoring, run the `extract_alignments.py` script with the `--similarity surface_form` and without the  ~~`--initialize~`~~ flag, run the `create_new_vocabs.py` script with the `--model_type joint` flag and the `init_weight.py` script with the `--prob None` flag.
+* `ramen`: see [RAMEN](https://github.com/alexa/ramen)
 
 
 ## Language Model Transfer with SMALA
