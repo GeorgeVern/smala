@@ -8,13 +8,15 @@ def main(args):
         tokenizer = AutoTokenizer.from_pretrained(
             'bert-base-uncased', cache_dir='cache', use_fast=True,
             do_lower_case=True)
+        print("Using original tokenizer of bert")
     else:
         tokenizer_dir = os.path.join("tknzr", args.tokenizer)
         tokenizer = BertTokenizerFast(
             vocab_file= tokenizer_dir, do_lower_case=True,
             strip_accents=False)
+        print("Using tokenizer located in {}".format(tokenizer_dir))
 
-    print("Using tokenizer located in {}".format(tokenizer_dir))
+ 
 
     with open(args.file) as f:
         text = f.readlines()
