@@ -51,7 +51,7 @@ echo "Downloaded $WIKI_DUMP_NAME in $WIKI_PATH/bz2/$WIKI_DUMP_NAME"
 # extract and tokenize Wiki data
 cd $MAIN_PATH
 echo "*** Cleaning and tokenizing $lg Wikipedia dump ... ***"
-if [ ! -f $WIKI_PATH/txt/$lg/$lg.all ]; then
+if [ ! -f $WIKI_PATH/txt/$lg/$lg.all.txt ]; then
   mkdir -p $WIKI_PATH/txt/$lg
   python3 $TOOLS_PATH/wikiextractor/wikiextractor/WikiExtractor.py $WIKI_PATH/bz2/$WIKI_DUMP_NAME --processes 8 -q -o - \
   | sed "/^\s*\$/d" \
