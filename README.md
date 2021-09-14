@@ -78,6 +78,10 @@ Initialize the embedding layer of the target model:
 
     python3 utils/init_weight.py --tgt_vocab alignments/en-el/new_tgt_vocab.txt --prob alignments/en-el/probs_vector.pth --tgt_model emb_layer/el/bert-ours_align_embs
 
+Compare with other models
+The above steps serve to use SMALA with additional initialization of the non-aligned subwords (`ours+align` in the paper). To compare with the other models that are included in the paper you must:
+* `ours`: as above but run the `extract_alignments.py` script without the flag ~~`--initialize~`~~ and the `init_weight.py` script with the `--prob None` flag. 
+
 
 ## Language Model Transfer with SMALA
 
