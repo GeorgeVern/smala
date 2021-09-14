@@ -63,7 +63,7 @@ if [ ! -f $WIKI_PATH/txt/$lg/$lg.all ]; then
 fi
 echo "*** Tokenized  $lg Wikipedia dump to $WIKI_PATH/txt/$lg/$lg.all.txt ***"
 
-if ! [[ -f "$WIKI_PATH/txt/$lg/$lg.train.txt" && -f "$WIKI_PATH/txt/$lg/$lg.valid.txt" ]]; then
+if ! [[ -f $WIKI_PATH/txt/$lg/$lg.train.txt && -f $WIKI_PATH/txt/$lg/$lg.valid.txt ]]; then
   # split into train / valid / test
   echo "*** Split into train / valid ***"
   split_data() {
@@ -88,6 +88,6 @@ if ! [[ -f "$WIKI_PATH/txt/$lg/$lg.train.txt" && -f "$WIKI_PATH/txt/$lg/$lg.vali
   split_data $WIKI_PATH/txt/$lg/$lg.all.txt $WIKI_PATH/txt/$lg/$lg.train.txt $WIKI_PATH/txt/$lg/$lg.valid.txt
 fi
 
-if [[ $lg != "en" ]]; then
+if [ $lg != "en" ]; then
   python3 utils/learn_tokenizer.py --tokenizer_dir $tknzr --files $WIKI_PATH/txt/$lg/$lg.train.txt  $WIKI_PATH/txt/$lg/$lg.valid.txt
 fi
