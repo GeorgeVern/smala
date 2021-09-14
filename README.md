@@ -49,10 +49,10 @@ Install tools (*) necessary for data extraction, preprocessing and alignment:
 
 ## SMALA
 ### Download data
-Download, preprocess and learn language-speific tokenizer in wikipedia data for **English** (en) and another language, e.g. **Greek** (el):
+Download and preprocess wikipedia data and learn language-specific for **English** (en) and another language, e.g. **Greek** (el):
     
     bash get-mono-data.sh en
-    bash get-mono-data.sh el tknzr/el-tokenizer
+    bash get-mono-data.sh el el-tokenizer
     
 ### 1) Subword Mapping
 Learn subword embeddings for each language:
