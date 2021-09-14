@@ -1,5 +1,5 @@
 # *SMALA* - *S*ubword *M*apping and *A*nchoring across *La*nguages
-This repository contains source code for our EMNLP 2021 Findings paper: Subword Mapping and Anchoring Across Languages.
+This repository contains source code for our EMNLP 2021 Findings paper: [Subword Mapping and Anchoring across Languages](https://arxiv.org/abs/2109.04556v1).
 
 ## Overview
 In our paper we propose a novel method to construct bilingual subword vocabularies. We identify _false positives_ (identical subwords with different meanings across languages) and _false negatives_ (different subwords with similar meanings) as limitation of jointly constructed subword vocabularies. SMALA extracts subword alignments using an unsupervised state-of-the-art mapping technique and uses them to create cross-lingual anchors based on subword similarities.
@@ -14,7 +14,7 @@ We first learn **subwords** separately for each language and then train the corr
 * Python 3.7.9
 * [Pytorch](https://pytorch.org/) (tested on 1.6.0)
 * [FastText](https://github.com/facebookresearch/fastText)
-* [FastAlign](https://github.com/clab/fast_align)
+* [FastAlign](https://github.com/clab/fast_align) (requires [cmake](https://cmake.org/install/))
 * [VecMap](https://github.com/artetxem/vecmap)
 * [Transformers](https://huggingface.co/transformers/) (tested on 4.1.0)
 * [Tokenizers](https://github.com/huggingface/tokenizers) (tested on 0.9.4)
@@ -60,14 +60,32 @@ Learn language-speific tokenizer and get subword embeddings for each language:
     bash learn_subw_embs.sh en
     bash learn_subw_embs.sh el
 
-Map the monolingual subword embedding into a common space using the **unsupervised** version of  VecMap, since we don't want to rely on seed dictionaries or identical (sub)words. Clone its github repo ([VecMap](https://github.com/artetxem/vecmap)) and then run:
+Map the monolingual subword embeddings into a common space using the **unsupervised** version of  VecMap, since we don't want to rely on seed dictionaries or identical (sub)words. Clone the github repo of ([VecMap](https://github.com/artetxem/vecmap)) and then run:
 
 ```
-python3 vecmap/map_embeddings.py --src_input data/mono/txt/en/WP/en.train.wp.vec --trg_input data/mono/txt/el/WP/el.train.wp.vec --src_output data/mono/txt/en/WP/mapped_en_el_embs.txt --trg_input data/mono/txt/el/WP/mapped_el_embs.txt --unsupervised
+python3 vecmap/map_embeddings.py --unsupervised --src_input data/mono/txt/en/WP/en.train.wp.vec --trg_input data/mono/txt/el/WP/el.train.wp.vec --src_output data/mono/txt/en/WP/mapped_en_el_embs.txt --trg_input data/mono/txt/el/WP/mapped_el_embs.txt
 ```
+### 2) Anchoring of similar subwords
+Extract subword alignments from the mapped subword embeddings:
+
+    python3 --src_emb data/mono/txt/en/WP/mapped_en_el_embs.txt --tgt_emb  data/mono/txt/el/WP/mapped_el_embs.txt --similarity cosine --alignment_dir en-el --initialize
+    
+
+
 
 ## Acknowledgements
 
-We would like to thank the community for releasing their code! This repository contains code from [HuggingFace](https://github.com/huggingface/transformers) and from the [RAMEN](https://github.com/alexa/ramen) repository.
+We would like to thank the community for releasing their code! This repository contains code from [HuggingFace](https://github.com/huggingface/transformers) and from the [RAMEN](https://github.com/alexa/ramen), [VecMap](https://github.com/artetxem/vecmap), [XLM](https://github.com/facebookresearch/XLM) and [SimAlign](https://github.com/cisnlp/simalign) repositories.
 
 ---
+## Reference
+If you use this repo in your research, please cite the paper:
+
+    @misc{vernikos2021subword,
+        title={Subword Mapping and Anchoring across Languages},
+        author={Giorgos Vernikos and Andrei Popescu-Belis},
+        year={2021},
+        eprint={2109.04556},
+        archivePrefix={arXiv},
+        primaryClass={cs.CL}
+    }
