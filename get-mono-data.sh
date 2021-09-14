@@ -89,5 +89,5 @@ if ! [[ -f $WIKI_PATH/txt/$lg/$lg.train.txt && -f $WIKI_PATH/txt/$lg/$lg.valid.t
 fi
 
 if [ $lg != "en" ]; then
-  python3 utils/learn_tokenizer.py --tokenizer_dir $tknzr --files $WIKI_PATH/txt/$lg/$lg.train.txt  $WIKI_PATH/txt/$lg/$lg.valid.txt
+  python3 utils/learn_tokenizer.py --tokenizer_dir tknzr/$tknzr --files $WIKI_PATH/txt/$lg/$lg.train.txt  $WIKI_PATH/txt/$lg/$lg.valid.txt
 fi
