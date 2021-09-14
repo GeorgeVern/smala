@@ -36,18 +36,18 @@ def save_vocab_dict(vocab_file, vocab_dict):
 
 
 def main(args):
+    tokenizer_dir = os.path.join("tknzr", args.tokenizer_name)
+    if os.path.isdir(tokenizer_dir):
+        raise ValueError("Directory already exists.")
+    else:
+        os.makedirs(tokenizer_dir)
+        
     tokenizer = BertWordPieceTokenizer(clean_text=True, handle_chinese_chars=True, lowercase=args.lowercase,
                                        strip_accents=False)
     
     print(args.files)
 
     tokenizer.train(args.files, vocab_size=30522, min_frequency=2, show_progress=True)
-
-    tokenizer_dir = os.path.join("tknzr", args.tokenizer_name)
-    if os.path.isdir(tokenizer_dir):
-        raise ValueError("Directory already exists.")
-    else:
-        os.makedirs(tokenizer_dir)
 
     save_vocabulary(tokenizer, tokenizer_dir + 'vocab.txt')
     tokenizer.save(tokenizer_dir + 'tokenizer.json', pretty=True)
