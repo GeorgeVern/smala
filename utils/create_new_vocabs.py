@@ -15,7 +15,9 @@ from learn_tokenizer import save_vocab_dict
 
 def main(args):
     src_tokenizer = AutoTokenizer.from_pretrained(args.src_model, cache_dir=args.cache_dir, use_fast=True)
-    tgt_tokenizer = BertTokenizerFast(vocab_file=args.tgt_vocab, do_lower_case=True, strip_accents=False)
+    
+    tgt_vocab = os.path.joint("tknzr", args.tgt_tokenizer, "vocab.txt")
+    tgt_tokenizer = BertTokenizerFast(vocab_file=tgt_vocab, do_lower_case=True, strip_accents=False)
 
     new_tgt_vocab = {}
     src_shared_idx = []
@@ -60,8 +62,8 @@ def main(args):
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser('create new vocabulary from the alignment')
-    parser.add_argument('--tgt_vocab',
-                        default='../el-tokenizer/vocab.txt',
+    parser.add_argument('--tgt_tokenizer',
+                        default='el-tokenizer',
                         help='target vocabulary file')
     parser.add_argument('--src_model', default='bert-base-uncased', help='source pre-trained file')
     parser.add_argument('--cache_dir', default='../cache',
