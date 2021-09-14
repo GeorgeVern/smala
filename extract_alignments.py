@@ -101,15 +101,25 @@ def main(args):
     sim_size = min(xw.shape[0], zw.shape[0])
     if args.similarity == "cosine":
         sim = get_similarity(xw, zw[:sim_size])
+
+        real_msim = get_mutual_sim(sim, sim_size)
     elif args.similarity == "csls":
         sim = xw.dot(zw[:sim_size].T)
         knn_sim_fwd = topk_mean(sim, k=10)
         knn_sim_bwd = topk_mean(sim.T, k=10)
         sim -= knn_sim_fwd[:, np.newaxis] / 2 + knn_sim_bwd / 2
+
+        real_msim = get_mutual_sim(sim, sim_size)
+    elif args.similarity == "surface_form":
+        joint_size = max(len(eng_words), len(for_words))
+        real_msim = np.zeros((joint_size, joint_size))
+        for i, eng_word in enumerate(eng_words):
+            for j, for_word in enumerate(for_words):
+                if eng_word == for_word:
+                    real_msim[i, j] = 1
     else:
         raise ValueError("Not a valid similarity name.")
 
-    real_msim = get_mutual_sim(sim, sim_size)
     print("Number of aligned subwords: {}".format(real_msim.sum()))
 
     alignment_dict, alignment_scores = equivalent_subw(eng_words, for_words, get_similarity(xw, zw[:sim_size]),
