@@ -43,19 +43,20 @@ def main(args):
 
     tokenizer.train(args.files, vocab_size=30522, min_frequency=2, show_progress=True)
 
-    if os.path.isdir(args.tokenizer_dir):
+    tokenizer_dir = os.path.join("tknzr", args.tokenizer_name)
+    if os.path.isdir(tokenizer_dir):
         raise ValueError("Directory already exists.")
     else:
-        os.makedirs(args.tokenizer_dir)
+        os.makedirs(tokenizer_dir)
 
-    save_vocabulary(tokenizer, args.tokenizer_dir + 'vocab.txt')
-    tokenizer.save(args.tokenizer_dir + 'tokenizer.json', pretty=True)
+    save_vocabulary(tokenizer, tokenizer_dir + 'vocab.txt')
+    tokenizer.save(tokenizer_dir + 'tokenizer.json', pretty=True)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser('generate target embeddings from alignments')
-    parser.add_argument('--tokenizer_dir',
-                        help='where to store the learned tokenizer')
+    parser.add_argument('--tokenizer_name',
+                        help='name of the learned tokenizer')
     parser.add_argument('--lowercase', default=True, help='whether to lowercase data')
     parser.add_argument('--files', nargs='+', default=['/data/mono/txt/en/en.train.txt',
                                                        '/data/mono/txt/en/en.valid.txt'],
