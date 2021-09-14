@@ -16,7 +16,7 @@ lg=$1  # input language
 
 N_THREADS=8
 
-MAX_NLINES=25000000
+MAX_NLINES=19000000
 
 # data path
 MAIN_PATH=$PWD
