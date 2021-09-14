@@ -21,10 +21,9 @@ FASTTEXT=$FASTTEXT_DIR/fasttext
 # Learn tokenizer from the data and use it to segment data
 #
 if [[ $lg = "en" ]]; then
-  python3 utils/apply_tokenizer.py --tokenizer "bert" --file "data/mono/txt/$lg/$lg.train.txt"
-else
-  python3 utils/apply_tokenizer.py --tokenizer $tknzr --file "data/mono/txt/$lg/$lg.train.txt"
+  $tknzr="bert"
 fi
+python3 utils/apply_tokenizer.py --tokenizer $tknzr --file "data/mono/txt/$lg/$lg.train.txt"
 
 #
 # Train fastText on source and target embeddings seperately
