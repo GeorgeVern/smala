@@ -13,6 +13,7 @@
 set -e
 
 lg=$1  # input language
+tknzr=$2  # target tokenizer name
 
 N_THREADS=8
 
@@ -58,29 +59,35 @@ if [ ! -f $WIKI_PATH/txt/$lg/$lg.all ]; then
   | grep -v "</doc>\$" \
   | perl $REPLACE_UNICODE_PUNCT | perl $NORM_PUNC -l $lg | perl $REM_NON_PRINT_CHAR | perl $TOKENIZER -no-escape -threads $N_THREADS -l $lg \
   | python3 $UNICODE \
-  > $WIKI_PATH/txt//$lg/$lg.all.txt
+  > $WIKI_PATH/txt/$lg/$lg.all.txt
 fi
-echo "*** Tokenized  $lg Wikipedia dump to $WIKI_PATH/txt//$lg/$lg.all.txt ***"
+echo "*** Tokenized  $lg Wikipedia dump to $WIKI_PATH/txt/$lg/$lg.all.txt ***"
 
-# split into train / valid / test
-echo "*** Split into train / valid ***"
-split_data() {
-    get_seeded_random() {
-        seed="$1"; openssl enc -aes-256-ctr -pass pass:"$seed" -nosalt </dev/zero 2>/dev/null
-    };
-    NLINES=`wc -l $1  | awk -F " " '{print $1}'`;
-    if [[ $NLINES -gt $MAX_NLINES ]]
-    then
-      NEW_NLINES=$MAX_NLINES
-    else
-      NEW_NLINES=$NLINES
-    fi
-    echo "Initial number of lines: $NLINES";
-    echo "Final number of lines: $NEW_NLINES";
+if ! [[ -f $WIKI_PATH/txt/$lg/$lg.train.txt && -f $WIKI_PATH/txt/$lg/$lg.valid.txt ]]; then
+  # split into train / valid / test
+  echo "*** Split into train / valid ***"
+  split_data() {
+      get_seeded_random() {
+          seed="$1"; openssl enc -aes-256-ctr -pass pass:"$seed" -nosalt </dev/zero 2>/dev/null
+      };
+      NLINES=`wc -l $1  | awk -F " " '{print $1}'`;
+      if [[ $NLINES -gt $MAX_NLINES ]]
+      then
+        NEW_NLINES=$MAX_NLINES
+      else
+        NEW_NLINES=$NLINES
+      fi
+      echo "Initial number of lines: $NLINES";
+      echo "Final number of lines: $NEW_NLINES";
 
-    NTRAIN=$((NEW_NLINES - 5000));
-    NVAL=$((NTRAIN + 5000));
-    shuf --random-source=<(get_seeded_random 42) $1 | head -$NTRAIN             > $2;
-    shuf --random-source=<(get_seeded_random 42) $1 | head -$NVAL | tail -5000  > $3;
-}
-split_data $WIKI_PATH/txt/$lg/$lg.all.txt $WIKI_PATH/txt/$lg/$lg.train.txt $WIKI_PATH/txt/$lg/$lg.valid.txt 
+      NTRAIN=$((NEW_NLINES - 5000));
+      NVAL=$((NTRAIN + 5000));
+      shuf --random-source=<(get_seeded_random 42) $1 | head -$NTRAIN             > $2;
+      shuf --random-source=<(get_seeded_random 42) $1 | head -$NVAL | tail -5000  > $3;
+  }
+  split_data $WIKI_PATH/txt/$lg/$lg.all.txt $WIKI_PATH/txt/$lg/$lg.train.txt $WIKI_PATH/txt/$lg/$lg.valid.txt
+fi
+
+if [[ $lg != "en" ]]; then
+  python3 utils/learn_tokenizer.py --tokenizer_dir $tknzr --files $WIKI_PATH/txt/$lg/$lg.train.txt  $WIKI_PATH/txt/$lg/$lg.valid.txt
+fi
