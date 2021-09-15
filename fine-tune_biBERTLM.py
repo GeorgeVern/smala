@@ -295,7 +295,7 @@ def main():
         if not model_args.alignment_dir:
             raise ValueError("No alignment directory provided")
 
-        with open(model_args.alignment_dir + "src_shared_idx.json", 'r') as f:
+        with open(os.path.join(model_args.alignment_dir, "src_shared_idx.json"), 'r') as f:
             src_subw_idx = json.load(f)
 
         logger.info("  Number of shared subwords {}".format(len(src_subw_idx)))
