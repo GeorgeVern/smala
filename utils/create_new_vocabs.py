@@ -28,7 +28,7 @@ def main(args):
         # create the new target vocab where the aligned target subwords are in the same indexes as in source
         for src_subw, tgt_subw in tqdm(alignment_dict.items()):
             if (src_subw != "</s>") and (src_subw not in src_tokenizer.all_special_tokens) and (
-                    tgt_subw not in tgt_tokenizer.all_special_tokens):
+                    tgt_subw not in tgt_tokenizer.all_special_tokens) and (tgt_subw in tgt_tokenizer.vocab):
                 src_subw_index = src_tokenizer.vocab[src_subw]
                 new_tgt_vocab[tgt_subw] = src_subw_index
                 src_shared_idx.append(src_subw_index)
