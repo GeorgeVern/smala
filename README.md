@@ -82,7 +82,7 @@ Initialize the embedding layer of the target model:
 The above steps serve to employ SMALA with additional initialization of the non-aligned subwords (`ours+align` in the paper). To compare with the other models that are included in the paper you need to modify these steps:
 * `ours`: as above but run the `extract_alignments.py` script without the flag ~~`--initialize~`~~ and the `init_weight.py` script with the `--prob None` flag. 
 * `joint`: skip the subword mapping and the first step of anchoring, run the `extract_alignments.py` script with the `--similarity surface_form` and without the  ~~`--initialize~`~~ flag, run the `create_new_vocabs.py` script with the `--model_type joint` flag and the `init_weight.py` script with the `--prob None` flag.
-* `ramen`: see [RAMEN](https://github.com/alexa/ramen)
+* `ramen`: skip the above steps, see [RAMEN](https://github.com/alexa/ramen) on how to create the probabilty vector (we also lowercase) and run the `init_weight.py` script with the correct`--prob` flag and the original tokenizer (e.g. `--tgt_vocab el-tokenizer/vocab.txt`)
 
 
 ## Language Model Transfer with SMALA
