@@ -57,7 +57,7 @@ def main(args):
     os.makedirs(args.alignment_dir, exist_ok=True)
     with open(os.path.join(args.alignment_dir, "src_shared_idx.json"), 'w') as f:
         json.dump(src_shared_idx, f, indent=2)
-    save_vocab_dict(os.path.joint(args.alignment_dir, 'new_tgt_vocab.txt'), new_tgt_vocab)
+    save_vocab_dict(os.path.join(args.alignment_dir, 'new_tgt_vocab.txt'), new_tgt_vocab)
 
 
 if __name__ == '__main__':
