@@ -22,7 +22,7 @@ def main(args):
     new_tgt_vocab = {}
     src_shared_idx = []
     if args.model_type == "ours":
-        with open(args.alignment_dir + 'alignment_dict.json', 'r') as fp:
+        with open(os.path.join(args.alignment_dir, 'alignment_dict.json'), 'r') as fp:
             alignment_dict = json.load(fp)
         # read the alignment dict and save the indexes of the aligned subword in the source embedding layer
         # create the new target vocab where the aligned target subwords are in the same indexes as in source
