@@ -16,7 +16,7 @@ from learn_tokenizer import save_vocab_dict
 def main(args):
     src_tokenizer = AutoTokenizer.from_pretrained(args.src_model, cache_dir=args.cache_dir, use_fast=True)
     
-    tgt_vocab = os.path.joint("tknzr", args.tgt_tokenizer, "vocab.txt")
+    tgt_vocab = os.path.join("tknzr", args.tgt_tokenizer, "vocab.txt")
     tgt_tokenizer = BertTokenizerFast(vocab_file=tgt_vocab, do_lower_case=True, strip_accents=False)
 
     new_tgt_vocab = {}
