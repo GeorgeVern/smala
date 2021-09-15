@@ -63,7 +63,7 @@ Learn subword embeddings for each language:
 Map the monolingual subword embeddings into a common space using the **unsupervised** version of  VecMap, since we don't want to rely on seed dictionaries or identical (sub)words. Clone the github repo of ([VecMap](https://github.com/artetxem/vecmap)) and then run:
 
 ```
-python3 vecmap/map_embeddings.py --unsupervised --src_input smala/data/mono/txt/en/WP/en.train.wp.vec --trg_input smala/data/mono/txt/el/WP/el.train.wp.vec --src_output smala/data/mono/txt/en/WP/mapped_en_el_embs.txt --trg_input smala/data/mono/txt/el/WP/mapped_el_embs.txt
+python3 vecmap/map_embeddings.py --unsupervised smala/data/mono/txt/en/WP/en.train.wp.vec smala/data/mono/txt/el/WP/el.train.wp.vec smala/data/mono/txt/en/WP/mapped_en_el_embs.txt smala/data/mono/txt/el/WP/mapped_el_embs.txt
 ```
 ### 2) Anchoring of similar subwords
 Extract subword alignments from the mapped subword embeddings:
