@@ -76,7 +76,7 @@ Create new vocabulary for the target language (so that aligned subwords point to
     
 Initialize the embedding layer of the target model:
 
-    python3 utils/init_weight.py --tgt_vocab alignments/en-el/new_tgt_vocab.txt --prob alignments/en-el/probs_vector.pth --tgt_model emb_layer/el/bert-ours_align_embs
+    python3 utils/init_weight.py --tgt_vocab alignments/en-el/new_tgt_vocab.txt --prob alignments/en-el/prob_vector --tgt_model emb_layer/el/bert-ours_align_embs
 
 ### Compare with other models
 The above steps serve to employ SMALA with additional initialization of the non-aligned subwords (`ours+align` in the paper). To compare with the other models that are included in the paper you need to modify these steps:
@@ -86,6 +86,25 @@ The above steps serve to employ SMALA with additional initialization of the non-
 
 
 ## Language Model Transfer with SMALA
+To transfer a pretrained LM to a new language using SMALA run:
+
+    python3 fine-tune_biBERTLM.py \
+    --tgt_lang el \
+    --output_dir ckpts/greek_ours_align \
+    --foreign_model emb_layer/el/bert-ours_align_embs \
+    --biLM_model_name ours \
+    --alignment_dir alignments/en-el \
+    --tgt_tokenizer_name alignments/en-el/new_tgt_vocab.txt \
+    --do_train --do_eval \
+    --evaluation_strategy steps \
+    --seed 12 \
+    --per_device_eval_batch_size 38 \
+    --max_steps 120000 \
+    --eval_steps 5000 \
+    --logging_steps 5000 \
+    --save_steps 5000 \
+    --per_device_train_batch_size 38 \
+    --eval_accumulation_steps 1
 
 
 ## Acknowledgements
