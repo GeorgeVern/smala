@@ -12,20 +12,18 @@ def main(args):
     else:
         tokenizer_dir = os.path.join("tknzr", args.tokenizer)
         tokenizer = BertTokenizerFast(
-            vocab_file= tokenizer_dir, do_lower_case=True,
+            vocab_file=tokenizer_dir, do_lower_case=True,
             strip_accents=False)
         print("Using tokenizer located in {}".format(tokenizer_dir))
-
- 
 
     with open(args.file) as f:
         text = f.readlines()
 
     # create an additional directory ../lang/WP/
     filename = args.file.split("/")[-1]
-    output_dir = "/".join(args.file.split("/")[:-1])+"/WP"
+    output_dir = "/".join(args.file.split("/")[:-1]) + "/WP"
     os.makedirs(output_dir, exist_ok=True)
-    
+
     output_file = os.path.join(output_dir, ".".join(filename.split(".")[:-1] + ["wp"]))
 
     with open(output_file, "w+") as output:
