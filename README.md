@@ -84,6 +84,27 @@ The above steps serve to employ SMALA with additional initialization of the non-
 * `joint`: skip the subword mapping and the first step of anchoring, run the `extract_alignments.py` script with the `--similarity surface_form` and without the  ~~`--initialize~`~~ flag, run the `create_new_vocabs.py` script with the `--model_type joint` flag and the `init_weight.py` script with the `--prob None` flag.
 * `ramen`: skip the above steps, see [RAMEN](https://github.com/alexa/ramen) on how to create the probabilty vector (we also lowercase) and run the `init_weight.py` script with the correct`--prob` flag and the original tokenizer (e.g. `--tgt_vocab el-tokenizer/vocab.txt`)
 
+### Extract alignments from parallel data
+Our method can also exploit parallel data. To do so you must first download (e.g. in `data/para/en-el)` and preprocess (tokenize and lowercase) a parallel corpus and run:
+
+    python3 utils/apply_tokenizer.py --tokenizer bert --file data/para/en-el/en-el.en.txt
+    python3 utils/apply_tokenizer.py --tokenizer el-tokenizer --file data/para/en-el/en-el.el.txt
+
+Then run FastAlign:
+    
+    bash run_fast-align.sh en el data/para/en-el/WP/en-el.en.wp data/para/en-el/WP/en-el.el.wp data/para/en-el/WP/fast-align
+    
+To get the similarity matrix from fast-align output clone the [RAMEN](https://github.com/alexa/ramen) repo and run:
+
+    python3 ramen/code/alignment/get_prob_para.py --bitxt smala/data/para/en-el/WP/fast-align/cleared.en-el --align smala/data/para/en-el/WP/fast-align/align.en-el --save smala/data/para/en-el/WP/fast-align/probs.para.en-el.pth
+    
+Finally, to extract alignments, create new vocabulary and initialize the embedding layer of the target model, run:
+
+    python3 extract_alignments_para.py --tgt_tokenizer el-tokenizer --similarity_matrix data/para/en-el/WP/fast-align/probs.para.en-el.pth --alignment_dir en-el_fastalign
+    python3 utils/create_new_vocabs.py --tgt_tokenizer el-tokenizer --model_type ours --alignment_dir alignments/en-el_fastalign
+    python3 utils/init_weight.py --tgt_vocab alignments/en-el_fastalign/new_tgt_vocab.txt --prob alignments/en-el_fastalign/prob_vector --tgt_model emb_layer/el/bert-ours_align_para_embs
+
+
 
 ## Language Model Transfer with SMALA
 To transfer a pretrained LM to a new language using SMALA run:
@@ -107,7 +128,7 @@ To transfer a pretrained LM to a new language using SMALA run:
     --eval_accumulation_steps 1
 
 
-## Acknowledgements
+## Acknowledgments
 
 We would like to thank the community for releasing their code! This repository contains code from [HuggingFace](https://github.com/huggingface/transformers) and from the [RAMEN](https://github.com/alexa/ramen), [VecMap](https://github.com/artetxem/vecmap), [XLM](https://github.com/facebookresearch/XLM) and [SimAlign](https://github.com/cisnlp/simalign) repositories.
 
