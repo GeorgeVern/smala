@@ -127,7 +127,9 @@ To **transfer** a pretrained LM to a **new language** using SMALA run:
     --per_device_train_batch_size 38 \
     --eval_accumulation_steps 1
 
-To **fine-tune** the transferred LM in **XNLI** (in English) run:
+To **fine-tune** the transferred LM in [XNLI](https://github.com/facebookresearch/XNLI) (in English) run:
+
+_(Download `XNLI 1.0` and `XNLI-MT 1.0` files from [XNLI](https://github.com/facebookresearch/XNLI) repo and unzip them inside the `data` folder)_
 
     python3 fine-tune_xnli.py \
     --data_dir data/ \
@@ -155,7 +157,7 @@ To **zero-shot** test in the target language (e.g. Greek) run:
     --do_test \
     --seed 12
     
- _For reproducibility we used seed `12` for LM training and seeds: `12`, `93`, `2319`, `1210` and `21` for XNLI fine-tuning._
+ _To reproduce our results use seed `12` for LM training and seeds `12`, `93`, `2319`, `1210` and `21` for XNLI fine-tuning._
  
 ## Acknowledgments
 
