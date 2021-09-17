@@ -1,4 +1,5 @@
 import argparse
+import json
 
 import os
 import torch
@@ -25,11 +26,20 @@ def main(args):
                                                               prob[candidate_alignment][key]) / 2
     print("Number of aligned subwords: {}".format(len(alignment_dict)))
 
+    output_dir = os.path.join("alignments", args.alignment_dir)
+    os.makedirs(output_dir, exist_ok=True)
+    with open(os.path.join(output_dir, "alignment_dict.json"), 'w') as fp:
+        json.dump(alignment_dict, fp)
+
+    print("Saving initialization weights")
+    torch.save(prob, os.path.join(output_dir, 'prob_vector'))
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser('extract subword alignments')
-    parser.add_argument('--tgt_tokenizer', help='tokenizer name')
+    parser.add_argument('--tgt_tokenizer', help='target tokenizer name')
     parser.add_argument('--similarity_matrix', default='alignments/en-el_fastalign/prob_vector',
-                        help='source (english) embeddings')
+                        help='similarity matrix')
+    parser.add_argument('--alignment_dir', default='en-el_fastalign',
+                        help='where to store the alignment and the prob vector files')
     args = parser.parse_args()
     main(args)
