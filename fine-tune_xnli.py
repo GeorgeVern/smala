@@ -676,9 +676,9 @@ if __name__ == "__main__":
         help="The maximum total input sequence length after tokenization. Sequences longer "
              "than this will be truncated, sequences shorter will be padded.",
     )
-    parser.add_argument("--do_train", default=True, help="Whether to run training.")
-    parser.add_argument("--do_eval", default=True, help="Whether to run evaluation.")
-    parser.add_argument("--do_test", default=False, help="Whether to run evaluation on the test set.")
+    parser.add_argument("--do_train", action='store_true', help="Whether to run training.")
+    parser.add_argument("--do_eval", action='store_true', help="Whether to run evaluation.")
+    parser.add_argument("--do_test", action='store_true', help="Whether to run evaluation on the test set.")
     parser.add_argument(
         "--evaluate_during_training", default=True, help="Run evaluation during training at each logging step."
     )
