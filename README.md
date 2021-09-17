@@ -107,7 +107,7 @@ Finally, to extract alignments, create new vocabulary and initialize the embeddi
 
 
 ## Language Model Transfer with SMALA
-To transfer a pretrained LM to a new language using SMALA run:
+To **transfer** a pretrained LM to a **new language** using SMALA run:
 
     python3 fine-tune_biBERTLM.py \
     --tgt_lang el \
@@ -127,7 +127,36 @@ To transfer a pretrained LM to a new language using SMALA run:
     --per_device_train_batch_size 38 \
     --eval_accumulation_steps 1
 
+To **fine-tune** the transferred LM in **XNLI** (in English) run:
 
+    python3 fine-tune_xnli.py \
+    --data_dir data/ \
+    --biLM_model_name ours \
+    --biLM ckpts/greek_ours_align/checkpoint-120000/ \
+    --foreign_model emb_layer/el/bert-ours_align_embs \
+    --language en \
+    --output_dir ckpts/greek_xnli_ours_align/ \
+    --tgt_tokenizer_name alignments/en-el/new_tgt_vocab.txt \
+    --alignment_dir alignments/en-el/ \
+    --do_train --do_eval \
+    --seed 12
+    
+To **zero-shot** test in the target language (e.g. Greek) run:
+
+    python3 fine-tune_xnli.py \
+    --data_dir data/ \
+    --biLM_model_name ours \
+    --biLM ckpts/greek_ours_align/checkpoint-120000/ \
+    --foreign_model emb_layer/el/bert-ours_align_embs \
+    --language el \
+    --output_dir ckpts/greek_xnli_ours_align/ \
+    --tgt_tokenizer_name alignments/en-el/new_tgt_vocab.txt \
+    --alignment_dir alignments/en-el/ \
+    --do_test \
+    --seed 12
+    
+ _For reproducibility we used seed `12` for LM training and seeds: `12`, `93`, `2319`, `1210` and `21` for XNLI fine-tuning._
+ 
 ## Acknowledgments
 
 We would like to thank the community for releasing their code! This repository contains code from [HuggingFace](https://github.com/huggingface/transformers) and from the [RAMEN](https://github.com/alexa/ramen), [VecMap](https://github.com/artetxem/vecmap), [XLM](https://github.com/facebookresearch/XLM) and [SimAlign](https://github.com/cisnlp/simalign) repositories.
