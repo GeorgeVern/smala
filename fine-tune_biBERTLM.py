@@ -27,7 +27,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 
 os.environ["TOKENIZERS_PARALLELISM"] = "False"
-# os.environ['CUDA_VISIBLE_DEVICES'] = '4, 5'
+os.environ['CUDA_VISIBLE_DEVICES'] = '0, 1'
 
 import json
 import numpy as np
@@ -242,7 +242,7 @@ def main():
 
     tgt_data_files = {}
     tgt_data_files["train"] = 'data/mono/txt/{}/{}.train.txt'.format(data_args.tgt_lang,
-                                                                                            data_args.tgt_lang)
+                                                                     data_args.tgt_lang)
     tgt_data_files["validation"] = 'data/mono/txt/{}/{}.valid.txt'.format(
         data_args.tgt_lang,
         data_args.tgt_lang)
@@ -339,6 +339,9 @@ def main():
 
     logger.info("  Tokenizing data using  {}".format(model_args.tgt_tokenizer_name))
 
+    # create directory for the tokenized datasets
+    token_dir = "data/tokenized/"
+    os.makedirs(token_dir, exist_ok=True)
     tokenized_datasets = []
     if data_args.line_by_line:
         # When using line_by_line, we just tokenize each nonempty line.
@@ -359,8 +362,9 @@ def main():
                     return_special_tokens_mask=True,
                 )
 
-            dataset_filenames = {'train': 'data/tokenized/{}_{}_train_file'.format(model_args.biLM_model_name, lang),
-                                 'validation': 'data/tokenized/{}_{}_val_file'.format(model_args.biLM_model_name, lang)}
+            dataset_filenames = {
+                'train': os.path.join(token_dir, '{}_{}_train_file'.format(model_args.biLM_model_name, lang)),
+                'validation': os.path.join(token_dir, '{}_{}_val_file'.format(model_args.biLM_model_name, lang))}
             tokenized_datasets.append(datasets.map(
                 tokenize_function,
                 batched=True,
@@ -378,8 +382,9 @@ def main():
             def tokenize_function(examples):
                 return tokenizer(examples[text_column_name], return_special_tokens_mask=True)
 
-            dataset_filenames = {'train': 'data/tokenized/{}_{}_train_file'.format(model_args.biLM_model_name, lang),
-                                 'validation': 'data/tokenized/{}_{}_val_file'.format(model_args.biLM_model_name, lang)}
+            dataset_filenames = {
+                'train': os.path.join(token_dir, '{}_{}_train_file'.format(model_args.biLM_model_name, lang)),
+                'validation': os.path.join(token_dir, '{}_{}_val_file'.format(model_args.biLM_model_name, lang))}
             tokenized_dataset = datasets.map(
                 tokenize_function,
                 batched=True,
@@ -421,8 +426,9 @@ def main():
             #
             # To speed up this part, we use multiprocessing. See the documentation of the map method for more information:
             # https://huggingface.co/docs/datasets/package_reference/main_classes.html#datasets.Dataset.map
-            dataset_filenames = {'train': 'data/tokenized/{}_{}_train_file'.format(model_args.biLM_model_name, lang),
-                                 'validation': 'data/tokenized/{}_{}_val_file'.format(model_args.biLM_model_name, lang)}
+            dataset_filenames = {
+                'train': os.path.join(token_dir, '{}_{}_train_file'.format(model_args.biLM_model_name, lang)),
+                'validation': os.path.join(token_dir, '{}_{}_val_file'.format(model_args.biLM_model_name, lang))}
             tokenized_datasets.append(tokenized_dataset.map(
                 group_texts,
                 batched=True,
