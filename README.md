@@ -85,7 +85,7 @@ The above steps serve to employ SMALA with additional initialization of the non-
 * `ramen`: skip the above steps, see [RAMEN](https://github.com/alexa/ramen) on how to create the probabilty vector (we also lowercase) and run the `init_weight.py` script with the correct`--prob` flag and the original tokenizer (e.g. `--tgt_vocab el-tokenizer/vocab.txt`)
 
 ### Extract alignments from parallel data
-Our method can also exploit parallel data. To do so you must first download (e.g. in `data/para/en-el)` and preprocess (tokenize and lowercase) a parallel corpus and run:
+Our method can also exploit parallel data. To do so you must first download (e.g. in `data/para/en-el)`, preprocess (tokenize and lowercase) a parallel corpus and run:
 
     python3 utils/apply_tokenizer.py --tokenizer bert --file data/para/en-el/en-el.en.txt
     python3 utils/apply_tokenizer.py --tokenizer el-tokenizer --file data/para/en-el/en-el.el.txt
